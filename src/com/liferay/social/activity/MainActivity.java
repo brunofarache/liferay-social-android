@@ -14,18 +14,19 @@
 
 package com.liferay.social.activity;
 
-import android.annotation.SuppressLint;
+import android.app.Activity;
 
-import android.app.ListActivity;
+import android.content.Intent;
 
-import android.os.Build;
 import android.os.Bundle;
 
 import android.view.Menu;
+import android.view.MenuItem;
 
-import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.liferay.social.R;
+import com.liferay.social.adapter.MicroblogsAdapter;
 import com.liferay.social.model.Microblog;
 import com.liferay.social.task.MicroblogsAsyncTask;
 import com.liferay.social.util.SettingsUtil;
@@ -36,17 +37,13 @@ import java.util.ArrayList;
  * @author Josiane Bezerra
  */
 
-public class MainActivity extends ListActivity {
+public class MainActivity extends Activity {
 
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
+		setContentView(R.layout.main);
 
 		SettingsUtil.init(this);
-
-		ArrayAdapter<Microblog> adapter = new ArrayAdapter<Microblog>(
-			this, android.R.layout.simple_list_item_1);
-
-		setListAdapter(adapter);
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -63,22 +60,13 @@ public class MainActivity extends ListActivity {
 		task.execute();
 	}
 
-	@SuppressLint("NewApi")
-	@SuppressWarnings("unchecked")
 	public void updateMicroblogs(ArrayList<Microblog> microblogs) {
-		ArrayAdapter<Microblog> adapter =
-			(ArrayAdapter<Microblog>)getListAdapter();
+		ListView list = (ListView)findViewById(R.id.list);
 
-		adapter.clear();
+		MicroblogsAdapter adapter = new MicroblogsAdapter(
+			this, R.layout.list_item, microblogs);
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			adapter.addAll(microblogs);
-		}
-		else {
-			for (Microblog microblog : microblogs) {
-				adapter.add(microblog);
-			}
-		}
+		list.setAdapter(adapter);
 	}
 
 }
