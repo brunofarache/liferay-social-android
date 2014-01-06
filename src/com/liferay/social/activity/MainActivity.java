@@ -52,6 +52,22 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.settings:
+				Intent intent = new Intent(this, SettingsActivity.class);
+
+				intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+
+				startActivity(intent);
+
+				return true;
+
+			default:
+				return false;
+		}
+	}
+
 	public void onResume() {
 		super.onResume();
 
