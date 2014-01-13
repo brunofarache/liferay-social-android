@@ -28,10 +28,11 @@ import android.widget.ListView;
 import com.liferay.social.R;
 import com.liferay.social.adapter.MicroblogsAdapter;
 import com.liferay.social.model.Microblog;
-import com.liferay.social.task.MicroblogsAsyncTask;
+import com.liferay.social.service.MicroblogsService;
 import com.liferay.social.util.SettingsUtil;
+import com.liferay.social.util.ToastUtil;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Josiane Bezerra
@@ -72,12 +73,15 @@ public class MainActivity extends Activity {
 	public void onResume() {
 		super.onResume();
 
-		MicroblogsAsyncTask task = new MicroblogsAsyncTask(this);
-
-		task.execute();
+		try {
+			MicroblogsService.getMicroblogsEntries(this, -1, -1);
+		}
+		catch (Exception e) {
+			ToastUtil.show(this, e.getMessage());
+		}
 	}
 
-	public void updateMicroblogs(ArrayList<Microblog> entries) {
+	public void updateMicroblogs(List<Microblog> entries) {
 		ListView list = (ListView)findViewById(R.id.list);
 
 		MicroblogsAdapter adapter = new MicroblogsAdapter(
