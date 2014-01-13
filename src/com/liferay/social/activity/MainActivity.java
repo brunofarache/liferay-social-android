@@ -29,7 +29,6 @@ import com.liferay.social.R;
 import com.liferay.social.adapter.MicroblogsEntryAdapter;
 import com.liferay.social.model.MicroblogsEntryModel;
 import com.liferay.social.service.MicroblogsService;
-import com.liferay.social.util.PrefsUtil;
 import com.liferay.social.util.ToastUtil;
 
 import java.util.ArrayList;
@@ -55,8 +54,6 @@ public class MainActivity extends Activity {
 
 		ListView listView = (ListView)findViewById(R.id.list);
 		listView.setAdapter(_adapter);
-
-		PrefsUtil.init(this);
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {
