@@ -48,7 +48,7 @@ public class MainActivity extends Activity {
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.main, menu);
+		getMenuInflater().inflate(R.menu.menu, menu);
 
 		return true;
 	}
