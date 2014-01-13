@@ -57,6 +57,7 @@ public class MicroblogsEntryModel {
 			RECEIVER_MICROBLOGS_ENTRY_ID);
 
 		_receiverUserId = jsonObj.getLong(RECEIVER_USER_ID);
+		_socialRelationType = jsonObj.getInt(SOCIAL_RELATION_TYPE);
 		_type = jsonObj.getInt(TYPE);
 		_userId = jsonObj.getLong(USER_ID);
 		_userName = jsonObj.getString(USER_NAME);
@@ -88,6 +89,10 @@ public class MicroblogsEntryModel {
 
 	public long getReceiverUserId() {
 		return _receiverUserId;
+	}
+
+	public int getSocialRelationType() {
+		return _socialRelationType;
 	}
 
 	public int getType() {
@@ -130,6 +135,10 @@ public class MicroblogsEntryModel {
 		_receiverUserId = receiverUserId;
 	}
 
+	public void setSocialRelationType(int socialRelationType) {
+		_socialRelationType = socialRelationType;
+	}
+
 	public void setType(int type) {
 		_type = type;
 	}
@@ -153,6 +162,7 @@ public class MicroblogsEntryModel {
 	private long _modifiedDate;
 	private long _receiverMicroblogsEntryId;
 	private long _receiverUserId;
+	private int _socialRelationType;
 	private int _type;
 	private long _userId;
 	private String _userName;
