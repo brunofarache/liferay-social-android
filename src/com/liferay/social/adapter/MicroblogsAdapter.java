@@ -36,19 +36,19 @@ import java.util.List;
 public class MicroblogsAdapter extends ArrayAdapter<Microblog> {
 
 	public MicroblogsAdapter(
-			Context context, int resource, List<Microblog> objects) {
+		Context context, int resource, List<Microblog> entries) {
 
-		super(context, resource, objects);
+		super(context, resource, entries);
 
-		this.context = context;
+		_context = context;
 	}
 
 	public View getView(int position, View view, ViewGroup parent) {
 		ViewHolder holder;
 
 		if (view == null) {
-			LayoutInflater inflater = (LayoutInflater)context.getSystemService(
-					Context.LAYOUT_INFLATER_SERVICE);
+			LayoutInflater inflater = (LayoutInflater)_context.getSystemService(
+				Context.LAYOUT_INFLATER_SERVICE);
 
 			view = inflater.inflate(R.layout.list_item, null);
 
@@ -64,16 +64,16 @@ public class MicroblogsAdapter extends ArrayAdapter<Microblog> {
 			holder = (ViewHolder)view.getTag();
 		}
 
-		Microblog microblog = getItem(position);
+		Microblog entry = getItem(position);
 
 		holder.portrait.setImageResource(R.drawable.ic_contact_picture);
-		holder.content.setText(microblog.getContent());
-		holder.username.setText(microblog.getUserName());
+		holder.content.setText(entry.getContent());
+		holder.username.setText(entry.getUserName());
 
 		return view;
 	}
 
-	protected Context context;
+	private Context _context;
 
 	private class ViewHolder {
 

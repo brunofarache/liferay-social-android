@@ -41,8 +41,8 @@ public class SettingsActivity extends PreferenceActivity
 	}
 
 	@SuppressWarnings("deprecation")
-	public void onCreate(Bundle bundle) {
-		super.onCreate(bundle);
+	public void onCreate(Bundle state) {
+		super.onCreate(state);
 
 		addPreferencesFromResource(R.layout.settings);
 
@@ -50,26 +50,17 @@ public class SettingsActivity extends PreferenceActivity
 
 		_loginPreference =
 			(EditTextPreference)preferenceScreen.findPreference(
-				SettingsUtil.LOGIN);
-
-		_passwordPreference =
-			(EditTextPreference)preferenceScreen.findPreference(
-				SettingsUtil.PASSWORD);
+			SettingsUtil.LOGIN);
 
 		_serverPreference =
 			(EditTextPreference)preferenceScreen.findPreference(
-				SettingsUtil.SERVER);
+			SettingsUtil.SERVER);
 
-		_loginPreference.setText(SettingsUtil.getLogin());
 		_loginPreference.setSummary(SettingsUtil.getLogin());
-
-		_passwordPreference.setText(SettingsUtil.getPassword());
-
-		_serverPreference.setText(SettingsUtil.getServer());
 		_serverPreference.setSummary(SettingsUtil.getServer());
 
 		SharedPreferences sharedPreferences =
-			PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+			PreferenceManager.getDefaultSharedPreferences(this);
 
 		sharedPreferences.registerOnSharedPreferenceChangeListener(this);
 	}
@@ -86,7 +77,6 @@ public class SettingsActivity extends PreferenceActivity
 	}
 
 	private EditTextPreference _loginPreference;
-	private EditTextPreference _passwordPreference;
 	private EditTextPreference _serverPreference;
 
 }

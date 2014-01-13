@@ -35,15 +35,15 @@ public class SettingsUtil {
 	public static final String SERVER = "server";
 
 	public static String getLogin() {
-		return _preferences.getString(LOGIN, "test@liferay.com");
+		return _preferences.getString(LOGIN, StringPool.BLANK);
 	}
 
 	public static String getPassword() {
-		return _preferences.getString(PASSWORD, "test");
+		return _preferences.getString(PASSWORD, StringPool.BLANK);
 	}
 
 	public static String getServer() {
-		return _preferences.getString(SERVER, "http://10.0.2.2:8081");
+		return _preferences.getString(SERVER, StringPool.BLANK);
 	}
 
 	public static Session getSession() {

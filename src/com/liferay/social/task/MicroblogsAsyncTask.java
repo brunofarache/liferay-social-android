@@ -42,7 +42,7 @@ public class MicroblogsAsyncTask
 	}
 
 	public ArrayList<Microblog> doInBackground(Void... params) {
-		ArrayList<Microblog> microblogs = new ArrayList<Microblog>();
+		ArrayList<Microblog> entries = new ArrayList<Microblog>();
 
 		Session session = SettingsUtil.getSession();
 		MicroblogsentryService service = new MicroblogsentryService(session);
@@ -53,7 +53,7 @@ public class MicroblogsAsyncTask
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject jsonObj = jsonArray.getJSONObject(i);
 
-				microblogs.add(new Microblog(jsonObj));
+				entries.add(new Microblog(jsonObj));
 			}
 		}
 		catch (Exception e) {
@@ -64,7 +64,7 @@ public class MicroblogsAsyncTask
 			cancel(true);
 		}
 
-		return microblogs;
+		return entries;
 	}
 
 	public void onCancelled(ArrayList<Microblog> result) {

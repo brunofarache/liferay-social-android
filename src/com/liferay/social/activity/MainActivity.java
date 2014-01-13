@@ -39,8 +39,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends Activity {
 
-	public void onCreate(Bundle bundle) {
-		super.onCreate(bundle);
+	public void onCreate(Bundle state) {
+		super.onCreate(state);
+
 		setContentView(R.layout.main);
 
 		SettingsUtil.init(this);
@@ -76,11 +77,11 @@ public class MainActivity extends Activity {
 		task.execute();
 	}
 
-	public void updateMicroblogs(ArrayList<Microblog> microblogs) {
+	public void updateMicroblogs(ArrayList<Microblog> entries) {
 		ListView list = (ListView)findViewById(R.id.list);
 
 		MicroblogsAdapter adapter = new MicroblogsAdapter(
-			this, R.layout.list_item, microblogs);
+			this, R.layout.list_item, entries);
 
 		list.setAdapter(adapter);
 	}
