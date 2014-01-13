@@ -16,6 +16,8 @@ package com.liferay.social.adapter;
 
 import android.content.Context;
 
+import android.os.Build;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +33,7 @@ import java.util.List;
 
 /**
  * @author Josiane Bezerra
+ * @author Silvio Santos
  */
 
 public class MicroblogsAdapter extends ArrayAdapter<Microblog> {
@@ -71,6 +74,23 @@ public class MicroblogsAdapter extends ArrayAdapter<Microblog> {
 		holder.username.setText(entry.getUserName());
 
 		return view;
+	}
+
+	public void setEntries(List<Microblog> entries) {
+		setNotifyOnChange(false);
+
+		clear();
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+			addAll(entries);
+		}
+		else {
+			for (Microblog entry : entries) {
+				add(entry);
+			}
+		}
+
+		notifyDataSetChanged();
 	}
 
 	private Context _context;

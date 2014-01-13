@@ -32,10 +32,12 @@ import com.liferay.social.service.MicroblogsService;
 import com.liferay.social.util.SettingsUtil;
 import com.liferay.social.util.ToastUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Josiane Bezerra
+ * @author Silvio Santos
  */
 
 public class MainActivity extends Activity {
@@ -44,6 +46,13 @@ public class MainActivity extends Activity {
 		super.onCreate(state);
 
 		setContentView(R.layout.main);
+
+		List<Microblog> entries = new ArrayList<Microblog>();
+
+		_adapter = new MicroblogsAdapter(this, R.layout.list_item, entries);
+
+		ListView listView = (ListView)findViewById(R.id.list);
+		listView.setAdapter(_adapter);
 
 		SettingsUtil.init(this);
 	}
@@ -82,12 +91,9 @@ public class MainActivity extends Activity {
 	}
 
 	public void updateMicroblogs(List<Microblog> entries) {
-		ListView list = (ListView)findViewById(R.id.list);
-
-		MicroblogsAdapter adapter = new MicroblogsAdapter(
-			this, R.layout.list_item, entries);
-
-		list.setAdapter(adapter);
+		_adapter.setEntries(entries);
 	}
+
+	private MicroblogsAdapter _adapter;
 
 }
