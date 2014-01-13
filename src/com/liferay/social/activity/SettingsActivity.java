@@ -25,7 +25,7 @@ import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 
 import com.liferay.social.R;
-import com.liferay.social.util.SettingsUtil;
+import com.liferay.social.util.PrefsUtil;
 
 /**
  * @author Josiane Bezerra
@@ -50,14 +50,14 @@ public class SettingsActivity extends PreferenceActivity
 
 		_loginPreference =
 			(EditTextPreference)preferenceScreen.findPreference(
-			SettingsUtil.LOGIN);
+			PrefsUtil.LOGIN);
 
 		_serverPreference =
 			(EditTextPreference)preferenceScreen.findPreference(
-			SettingsUtil.SERVER);
+			PrefsUtil.SERVER);
 
-		_loginPreference.setSummary(SettingsUtil.getLogin());
-		_serverPreference.setSummary(SettingsUtil.getServer());
+		_loginPreference.setSummary(PrefsUtil.getLogin());
+		_serverPreference.setSummary(PrefsUtil.getServer());
 
 		SharedPreferences sharedPreferences =
 			PreferenceManager.getDefaultSharedPreferences(this);
@@ -68,11 +68,11 @@ public class SettingsActivity extends PreferenceActivity
 	public void onSharedPreferenceChanged(
 		SharedPreferences sharedPreferences, String key) {
 
-		if (key.equals(SettingsUtil.LOGIN)) {
-			_loginPreference.setSummary(SettingsUtil.getLogin());
+		if (key.equals(PrefsUtil.LOGIN)) {
+			_loginPreference.setSummary(PrefsUtil.getLogin());
 		}
-		else if (key.equals(SettingsUtil.SERVER)) {
-			_serverPreference.setSummary(SettingsUtil.getServer());
+		else if (key.equals(PrefsUtil.SERVER)) {
+			_serverPreference.setSummary(PrefsUtil.getServer());
 		}
 	}
 

@@ -26,7 +26,7 @@ import com.liferay.mobile.android.service.SessionImpl;
  * @author Bruno Farache
  */
 
-public class SettingsUtil {
+public class PrefsUtil {
 
 	public static final String LOGIN = "login";
 

@@ -27,7 +27,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.liferay.social.R;
-import com.liferay.social.model.Microblog;
+import com.liferay.social.model.MicroblogsEntryModel;
 
 import java.util.List;
 
@@ -36,10 +36,10 @@ import java.util.List;
  * @author Silvio Santos
  */
 
-public class MicroblogsAdapter extends ArrayAdapter<Microblog> {
+public class MicroblogsEntryAdapter extends ArrayAdapter<MicroblogsEntryModel> {
 
-	public MicroblogsAdapter(
-		Context context, int resource, List<Microblog> entries) {
+	public MicroblogsEntryAdapter(
+		Context context, int resource, List<MicroblogsEntryModel> entries) {
 
 		super(context, resource, entries);
 
@@ -67,7 +67,7 @@ public class MicroblogsAdapter extends ArrayAdapter<Microblog> {
 			holder = (ViewHolder)view.getTag();
 		}
 
-		Microblog entry = getItem(position);
+		MicroblogsEntryModel entry = getItem(position);
 
 		holder.portrait.setImageResource(R.drawable.ic_contact_picture);
 		holder.content.setText(entry.getContent());
@@ -76,7 +76,7 @@ public class MicroblogsAdapter extends ArrayAdapter<Microblog> {
 		return view;
 	}
 
-	public void setEntries(List<Microblog> entries) {
+	public void setEntries(List<MicroblogsEntryModel> entries) {
 		setNotifyOnChange(false);
 
 		clear();
@@ -85,7 +85,7 @@ public class MicroblogsAdapter extends ArrayAdapter<Microblog> {
 			addAll(entries);
 		}
 		else {
-			for (Microblog entry : entries) {
+			for (MicroblogsEntryModel entry : entries) {
 				add(entry);
 			}
 		}

@@ -26,10 +26,10 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.liferay.social.R;
-import com.liferay.social.adapter.MicroblogsAdapter;
-import com.liferay.social.model.Microblog;
+import com.liferay.social.adapter.MicroblogsEntryAdapter;
+import com.liferay.social.model.MicroblogsEntryModel;
 import com.liferay.social.service.MicroblogsService;
-import com.liferay.social.util.SettingsUtil;
+import com.liferay.social.util.PrefsUtil;
 import com.liferay.social.util.ToastUtil;
 
 import java.util.ArrayList;
@@ -47,14 +47,16 @@ public class MainActivity extends Activity {
 
 		setContentView(R.layout.main);
 
-		List<Microblog> entries = new ArrayList<Microblog>();
+		List<MicroblogsEntryModel> entries =
+			new ArrayList<MicroblogsEntryModel>();
 
-		_adapter = new MicroblogsAdapter(this, R.layout.list_item, entries);
+		_adapter = new MicroblogsEntryAdapter(
+			this, R.layout.list_item, entries);
 
 		ListView listView = (ListView)findViewById(R.id.list);
 		listView.setAdapter(_adapter);
 
-		SettingsUtil.init(this);
+		PrefsUtil.init(this);
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -90,10 +92,10 @@ public class MainActivity extends Activity {
 		}
 	}
 
-	public void updateMicroblogs(List<Microblog> entries) {
+	public void updateMicroblogs(List<MicroblogsEntryModel> entries) {
 		_adapter.setEntries(entries);
 	}
 
-	private MicroblogsAdapter _adapter;
+	private MicroblogsEntryAdapter _adapter;
 
 }

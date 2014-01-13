@@ -18,7 +18,7 @@ import android.util.Log;
 
 import com.liferay.mobile.android.task.callback.typed.GenericAsyncTaskCallback;
 import com.liferay.social.activity.MainActivity;
-import com.liferay.social.model.Microblog;
+import com.liferay.social.model.MicroblogsEntryModel;
 import com.liferay.social.util.ToastUtil;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ import org.json.JSONObject;
  * @author Silvio Santos
  */
 public class GetMicroblogsEntryCallback
-	extends GenericAsyncTaskCallback<List<Microblog>> {
+	extends GenericAsyncTaskCallback<List<MicroblogsEntryModel>> {
 
 	public GetMicroblogsEntryCallback(MainActivity activity) {
 		_activity = activity;
@@ -45,19 +45,20 @@ public class GetMicroblogsEntryCallback
 		ToastUtil.show(_activity, message + ": " + e.getMessage(), true);
 	}
 
-	public void onSuccess(List<Microblog> entries) {
+	public void onSuccess(List<MicroblogsEntryModel> entries) {
 		_activity.updateMicroblogs(entries);
 	}
 
-	public List<Microblog> transform(Object obj) throws Exception {
-		List<Microblog> entries = new ArrayList<Microblog>();
+	public List<MicroblogsEntryModel> transform(Object obj) throws Exception {
+		List<MicroblogsEntryModel> entries =
+			new ArrayList<MicroblogsEntryModel>();
 
 		JSONArray jsonArray = (JSONArray)obj;
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject json = (JSONObject)jsonArray.get(i);
 
-			entries.add(new Microblog(json));
+			entries.add(new MicroblogsEntryModel(json));
 		}
 
 		return entries;

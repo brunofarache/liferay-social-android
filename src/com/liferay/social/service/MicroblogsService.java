@@ -18,7 +18,7 @@ import com.liferay.mobile.android.service.Session;
 import com.liferay.mobile.android.v7.microblogsentry.MicroblogsentryService;
 import com.liferay.social.activity.MainActivity;
 import com.liferay.social.callback.GetMicroblogsEntryCallback;
-import com.liferay.social.util.SettingsUtil;
+import com.liferay.social.util.PrefsUtil;
 
 /**
  * @author Silvio Santos
@@ -29,7 +29,7 @@ public class MicroblogsService {
 			MainActivity activity, int start, int end)
 		throws Exception {
 
-		Session session = SettingsUtil.getSession();
+		Session session = PrefsUtil.getSession();
 
 		GetMicroblogsEntryCallback callback = new GetMicroblogsEntryCallback(
 			activity);
