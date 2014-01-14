@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+
+<project name="liferay-sync-android" basedir="." default="format-source">
+    <property name="project.dir" value="${basedir}" />
+	<property name="java.dir" value="${project.dir}/src" />
+	
+	<property file="${project.dir}/build.${user.name}.properties" />
+	<property file="${project.dir}/build.${env.COMPUTERNAME}.properties" />
+	<property file="${project.dir}/build.${env.HOST}.properties" />
+	<property file="${project.dir}/build.${env.HOSTNAME}.properties" />
+	<property file="${project.dir}/build.properties" />
+	
+	<path id="portal.classpath">
+		<pathelement location="${portal.dir}/portal-impl/classes" />
+		<pathelement location="${portal.dir}/portal-service/classes" />
+		<pathelement location="${portal.dir}/portal-web/docroot/WEB-INF/classes" />
+		<pathelement location="${portal.dir}/util-java/classes" />
+		<fileset dir="${portal.dir}/lib/development" includes="*.jar" />
+		<fileset dir="${portal.dir}/lib/global" includes="*.jar" />
+		<fileset dir="${portal.dir}/lib/portal" includes="*.jar" />
+	</path>
+
+    <target name="format-source">
+		<java
+			classname="com.liferay.portal.tools.sourceformatter.SourceFormatter"
+			classpathref="portal.classpath"
+			dir="${java.dir}"
+			fork="true"
+			newenvironment="true"
+		>
+			<jvmarg value="-Xmx128m" />
+		</java>
+
+		<delete file="ServiceBuilder.temp" />
+	</target>
+</project>
