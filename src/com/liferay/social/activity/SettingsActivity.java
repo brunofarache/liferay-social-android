@@ -30,7 +30,6 @@ import com.liferay.social.util.PrefsUtil;
 /**
  * @author Josiane Bezerra
  */
-
 public class SettingsActivity extends PreferenceActivity
 	implements OnSharedPreferenceChangeListener {
 

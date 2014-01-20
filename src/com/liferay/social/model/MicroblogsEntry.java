@@ -20,8 +20,7 @@ import org.json.JSONObject;
 /**
  * @author Josiane Bezerra
  */
-
-public class MicroblogsEntryModel {
+public class MicroblogsEntry {
 
 	public static final String COMPANY_ID = "companyId";
 
@@ -46,7 +45,7 @@ public class MicroblogsEntryModel {
 
 	public static final String USER_NAME = "userName";
 
-	public MicroblogsEntryModel(JSONObject jsonObj) throws JSONException {
+	public MicroblogsEntry(JSONObject jsonObj) throws JSONException {
 		_companyId = jsonObj.getLong(COMPANY_ID);
 		_content = jsonObj.getString(CONTENT);
 		_createDate = jsonObj.getLong(CREATE_DATE);

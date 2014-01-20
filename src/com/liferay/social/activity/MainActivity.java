@@ -29,8 +29,8 @@ import com.liferay.mobile.android.service.Session;
 import com.liferay.mobile.android.v7.microblogsentry.MicroblogsentryService;
 import com.liferay.social.R;
 import com.liferay.social.adapter.MicroblogsEntryAdapter;
-import com.liferay.social.callback.GetMicroblogsEntryCallback;
-import com.liferay.social.model.MicroblogsEntryModel;
+import com.liferay.social.callback.GetMicroblogsEntriesCallback;
+import com.liferay.social.model.MicroblogsEntry;
 import com.liferay.social.service.ServiceFactory;
 import com.liferay.social.util.PrefsUtil;
 import com.liferay.social.util.ToastUtil;
@@ -42,7 +42,6 @@ import java.util.List;
  * @author Josiane Bezerra
  * @author Silvio Santos
  */
-
 public class MainActivity extends Activity {
 
 	public void onCreate(Bundle state) {
@@ -50,8 +49,7 @@ public class MainActivity extends Activity {
 
 		setContentView(R.layout.main);
 
-		List<MicroblogsEntryModel> entries =
-			new ArrayList<MicroblogsEntryModel>();
+		List<MicroblogsEntry> entries = new ArrayList<MicroblogsEntry>();
 
 		_adapter = new MicroblogsEntryAdapter(
 			this, R.layout.list_item, entries);
@@ -87,7 +85,7 @@ public class MainActivity extends Activity {
 
 		try {
 			Session session = PrefsUtil.getSession(
-				new GetMicroblogsEntryCallback(this));
+				new GetMicroblogsEntriesCallback(this));
 
 			MicroblogsentryService service = ServiceFactory.getService(
 				MicroblogsentryService.class, session);
@@ -99,7 +97,7 @@ public class MainActivity extends Activity {
 		}
 	}
 
-	public void updateMicroblogs(List<MicroblogsEntryModel> entries) {
+	public void updateMicroblogs(List<MicroblogsEntry> entries) {
 		_adapter.setEntries(entries);
 	}
 

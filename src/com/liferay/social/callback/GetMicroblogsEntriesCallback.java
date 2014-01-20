@@ -14,11 +14,9 @@
 
 package com.liferay.social.callback;
 
-import android.util.Log;
-
 import com.liferay.mobile.android.task.callback.typed.GenericAsyncTaskCallback;
 import com.liferay.social.activity.MainActivity;
-import com.liferay.social.model.MicroblogsEntryModel;
+import com.liferay.social.model.MicroblogsEntry;
 import com.liferay.social.util.ToastUtil;
 
 import java.util.ArrayList;
@@ -30,42 +28,35 @@ import org.json.JSONObject;
 /**
  * @author Silvio Santos
  */
-public class GetMicroblogsEntryCallback
-	extends GenericAsyncTaskCallback<List<MicroblogsEntryModel>> {
+public class GetMicroblogsEntriesCallback
+	extends GenericAsyncTaskCallback<List<MicroblogsEntry>> {
 
-	public GetMicroblogsEntryCallback(MainActivity activity) {
+	public GetMicroblogsEntriesCallback(MainActivity activity) {
 		_activity = activity;
 	}
 
 	public void onFailure(Exception e) {
-		String message = "Couldn't get microblogs";
-
-		Log.e(_CLASS_NAME, message, e);
-
-		ToastUtil.show(_activity, message + ": " + e.getMessage(), true);
+		ToastUtil.show(
+			_activity, "Couldn't get microblogs: " + e.getMessage(), true);
 	}
 
-	public void onSuccess(List<MicroblogsEntryModel> entries) {
+	public void onSuccess(List<MicroblogsEntry> entries) {
 		_activity.updateMicroblogs(entries);
 	}
 
-	public List<MicroblogsEntryModel> transform(Object obj) throws Exception {
-		List<MicroblogsEntryModel> entries =
-			new ArrayList<MicroblogsEntryModel>();
+	public List<MicroblogsEntry> transform(Object obj) throws Exception {
+		List<MicroblogsEntry> entries = new ArrayList<MicroblogsEntry>();
 
 		JSONArray jsonArray = (JSONArray)obj;
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject json = (JSONObject)jsonArray.get(i);
 
-			entries.add(new MicroblogsEntryModel(json));
+			entries.add(new MicroblogsEntry(json));
 		}
 
 		return entries;
 	}
-
-	private static String _CLASS_NAME =
-		GetMicroblogsEntryCallback.class.getName();
 
 	private MainActivity _activity;
 

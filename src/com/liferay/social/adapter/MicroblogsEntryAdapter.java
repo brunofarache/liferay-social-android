@@ -27,7 +27,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.liferay.social.R;
-import com.liferay.social.model.MicroblogsEntryModel;
+import com.liferay.social.model.MicroblogsEntry;
 
 import java.util.List;
 
@@ -35,11 +35,10 @@ import java.util.List;
  * @author Josiane Bezerra
  * @author Silvio Santos
  */
-
-public class MicroblogsEntryAdapter extends ArrayAdapter<MicroblogsEntryModel> {
+public class MicroblogsEntryAdapter extends ArrayAdapter<MicroblogsEntry> {
 
 	public MicroblogsEntryAdapter(
-		Context context, int resource, List<MicroblogsEntryModel> entries) {
+		Context context, int resource, List<MicroblogsEntry> entries) {
 
 		super(context, resource, entries);
 
@@ -67,7 +66,7 @@ public class MicroblogsEntryAdapter extends ArrayAdapter<MicroblogsEntryModel> {
 			holder = (ViewHolder)view.getTag();
 		}
 
-		MicroblogsEntryModel entry = getItem(position);
+		MicroblogsEntry entry = getItem(position);
 
 		holder.portrait.setImageResource(R.drawable.ic_contact_picture);
 		holder.content.setText(entry.getContent());
@@ -76,7 +75,7 @@ public class MicroblogsEntryAdapter extends ArrayAdapter<MicroblogsEntryModel> {
 		return view;
 	}
 
-	public void setEntries(List<MicroblogsEntryModel> entries) {
+	public void setEntries(List<MicroblogsEntry> entries) {
 		setNotifyOnChange(false);
 
 		clear();
@@ -85,7 +84,7 @@ public class MicroblogsEntryAdapter extends ArrayAdapter<MicroblogsEntryModel> {
 			addAll(entries);
 		}
 		else {
-			for (MicroblogsEntryModel entry : entries) {
+			for (MicroblogsEntry entry : entries) {
 				add(entry);
 			}
 		}
@@ -100,6 +99,7 @@ public class MicroblogsEntryAdapter extends ArrayAdapter<MicroblogsEntryModel> {
 		ImageView portrait;
 		TextView username;
 		TextView content;
+
 	}
 
 }

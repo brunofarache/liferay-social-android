@@ -21,6 +21,4 @@ public class StringPool {
 
 	public static final String BLANK = "";
 
-	public static final String UTF_8 = "UTF-8";
-
 }

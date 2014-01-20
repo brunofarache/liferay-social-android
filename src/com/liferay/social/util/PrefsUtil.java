@@ -26,7 +26,6 @@ import com.liferay.mobile.android.task.callback.AsyncTaskCallback;
 /**
  * @author Bruno Farache
  */
-
 public class PrefsUtil {
 
 	public static final String LOGIN = "login";
