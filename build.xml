@@ -1,15 +1,16 @@
 <?xml version="1.0"?>
 
-<project name="liferay-sync-android" basedir="." default="format-source">
+<project name="liferay-sync-social" basedir="." default="format-source">
     <property name="project.dir" value="${basedir}" />
 	<property name="java.dir" value="${project.dir}/src" />
-	
+	<property name="resources.dir" value="${project.dir}/res" />
+
 	<property file="${project.dir}/build.${user.name}.properties" />
 	<property file="${project.dir}/build.${env.COMPUTERNAME}.properties" />
 	<property file="${project.dir}/build.${env.HOST}.properties" />
 	<property file="${project.dir}/build.${env.HOSTNAME}.properties" />
 	<property file="${project.dir}/build.properties" />
-	
+
 	<path id="portal.classpath">
 		<pathelement location="${portal.dir}/portal-impl/classes" />
 		<pathelement location="${portal.dir}/portal-service/classes" />
@@ -20,11 +21,11 @@
 		<fileset dir="${portal.dir}/lib/portal" includes="*.jar" />
 	</path>
 
-    <target name="format-source">
+	<target name="format">
 		<java
 			classname="com.liferay.portal.tools.sourceformatter.SourceFormatter"
 			classpathref="portal.classpath"
-			dir="${java.dir}"
+			dir="${dir}"
 			fork="true"
 			newenvironment="true"
 		>
@@ -32,5 +33,17 @@
 		</java>
 
 		<delete file="ServiceBuilder.temp" />
+	</target>
+
+	<target name="format-resources">
+		<antcall target="format">
+			<param name="dir" value="${resources.dir}" />
+		</antcall>
+	</target>
+
+	<target name="format-source">
+		<antcall target="format">
+			<param name="dir" value="${java.dir}" />
+		</antcall>
 	</target>
 </project>
