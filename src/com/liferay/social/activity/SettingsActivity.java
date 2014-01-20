@@ -46,12 +46,10 @@ public class SettingsActivity extends PreferenceActivity
 
 		PreferenceScreen preferenceScreen = getPreferenceScreen();
 
-		_loginPreference =
-			(EditTextPreference)preferenceScreen.findPreference(
+		_loginPreference = (EditTextPreference)preferenceScreen.findPreference(
 			PrefsUtil.LOGIN);
 
-		_serverPreference =
-			(EditTextPreference)preferenceScreen.findPreference(
+		_serverPreference = (EditTextPreference)preferenceScreen.findPreference(
 			PrefsUtil.SERVER);
 
 		_loginPreference.setSummary(PrefsUtil.getLogin());
@@ -63,7 +61,7 @@ public class SettingsActivity extends PreferenceActivity
 	}
 
 	public void onSharedPreferenceChanged(
-		SharedPreferences sharedPreferences, String key) {
+		SharedPreferences preferences, String key) {
 
 		if (key.equals(PrefsUtil.LOGIN)) {
 			_loginPreference.setSummary(PrefsUtil.getLogin());
