@@ -25,10 +25,14 @@ import android.view.MenuItem;
 
 import android.widget.ListView;
 
+import com.liferay.mobile.android.service.Session;
+import com.liferay.mobile.android.v7.microblogsentry.MicroblogsentryService;
 import com.liferay.social.R;
 import com.liferay.social.adapter.MicroblogsEntryAdapter;
+import com.liferay.social.callback.GetMicroblogsEntryCallback;
 import com.liferay.social.model.MicroblogsEntryModel;
-import com.liferay.social.service.MicroblogsService;
+import com.liferay.social.service.ServiceFactory;
+import com.liferay.social.util.PrefsUtil;
 import com.liferay.social.util.ToastUtil;
 
 import java.util.ArrayList;
@@ -82,7 +86,13 @@ public class MainActivity extends Activity {
 		super.onResume();
 
 		try {
-			MicroblogsService.getMicroblogsEntries(this, -1, -1);
+			Session session = PrefsUtil.getSession(
+				new GetMicroblogsEntryCallback(this));
+
+			MicroblogsentryService service = ServiceFactory.getService(
+				MicroblogsentryService.class, session);
+
+			service.getMicroblogsEntries(-1, -1);
 		}
 		catch (Exception e) {
 			ToastUtil.show(this, e.getMessage());

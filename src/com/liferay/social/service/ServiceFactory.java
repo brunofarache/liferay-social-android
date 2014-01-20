@@ -14,31 +14,36 @@
 
 package com.liferay.social.service;
 
+import com.liferay.mobile.android.service.BaseService;
 import com.liferay.mobile.android.service.Session;
-import com.liferay.mobile.android.v7.microblogsentry.MicroblogsentryService;
-import com.liferay.social.activity.MainActivity;
-import com.liferay.social.callback.GetMicroblogsEntryCallback;
-import com.liferay.social.util.PrefsUtil;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * @author Silvio Santos
+ * @author Bruno Farache
  */
-public class MicroblogsService {
+public class ServiceFactory {
 
-	public static void getMicroblogsEntries(
-			MainActivity activity, int start, int end)
+	public static <T extends BaseService> T getService(
+			Class<T> clazz, Session session)
 		throws Exception {
 
-		Session session = PrefsUtil.getSession();
+		T instance = (T)_services.get(clazz.getName());
 
-		GetMicroblogsEntryCallback callback = new GetMicroblogsEntryCallback(
-			activity);
+		if (instance == null) {
+			instance = clazz.getDeclaredConstructor(Session.class).newInstance(
+				session);
 
-		session.setCallback(callback);
+			_services.put(clazz.getName(), instance);
+		}
 
-		MicroblogsentryService service = new MicroblogsentryService(session);
+		instance.setSession(session);
 
-		service.getMicroblogsEntries(start, end);
+		return instance;
 	}
+
+	private static Map<String, BaseService> _services =
+		new HashMap<String, BaseService>();
 
 }

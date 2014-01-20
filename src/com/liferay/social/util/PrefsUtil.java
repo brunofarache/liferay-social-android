@@ -21,6 +21,7 @@ import android.preference.PreferenceManager;
 
 import com.liferay.mobile.android.service.Session;
 import com.liferay.mobile.android.service.SessionImpl;
+import com.liferay.mobile.android.task.callback.AsyncTaskCallback;
 
 /**
  * @author Bruno Farache
@@ -47,13 +48,41 @@ public class PrefsUtil {
 	}
 
 	public static Session getSession() {
-		return new SessionImpl(getServer(), getLogin(), getPassword());
+		return getSession(null);
+	}
+
+	public static Session getSession(AsyncTaskCallback callback) {
+		if (_session == null) {
+			_session = new SessionImpl(getServer(), getLogin(), getPassword());
+		}
+
+		_session.setCallback(callback);
+
+		return _session;
 	}
 
 	public static void init(Context context) {
 		_preferences = PreferenceManager.getDefaultSharedPreferences(context);
+
+		_listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+			public void onSharedPreferenceChanged(
+				SharedPreferences preferences, String key) {
+
+				if (!key.equals(LOGIN) && !key.equals(PASSWORD) &&
+					!key.equals(SERVER)) {
+
+					return;
+				}
+
+				_session = null;
+			}
+		};
+
+		_preferences.registerOnSharedPreferenceChangeListener(_listener);
 	}
 
+	private static SharedPreferences.OnSharedPreferenceChangeListener _listener;
 	private static SharedPreferences _preferences;
+	private static Session _session;
 
 }
