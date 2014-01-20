@@ -97,7 +97,7 @@ public class MainActivity extends Activity {
 		}
 	}
 
-	public void updateMicroblogs(List<MicroblogsEntry> entries) {
+	public void updateEntries(List<MicroblogsEntry> entries) {
 		_adapter.setEntries(entries);
 	}
 

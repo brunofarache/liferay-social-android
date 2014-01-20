@@ -42,6 +42,10 @@ public class PrefsUtil {
 		return _preferences.getString(PASSWORD, StringPool.BLANK);
 	}
 
+	public static SharedPreferences getPreferences() {
+		return _preferences;
+	}
+
 	public static String getServer() {
 		return _preferences.getString(SERVER, StringPool.BLANK);
 	}

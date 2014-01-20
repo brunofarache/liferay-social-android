@@ -21,7 +21,6 @@ import android.os.Bundle;
 
 import android.preference.EditTextPreference;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 
 import com.liferay.social.R;
@@ -58,8 +57,7 @@ public class SettingsActivity extends PreferenceActivity
 		_loginPreference.setSummary(PrefsUtil.getLogin());
 		_serverPreference.setSummary(PrefsUtil.getServer());
 
-		SharedPreferences sharedPreferences =
-			PreferenceManager.getDefaultSharedPreferences(this);
+		SharedPreferences sharedPreferences = PrefsUtil.getPreferences();
 
 		sharedPreferences.registerOnSharedPreferenceChangeListener(this);
 	}

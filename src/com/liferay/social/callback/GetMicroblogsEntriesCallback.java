@@ -37,11 +37,12 @@ public class GetMicroblogsEntriesCallback
 
 	public void onFailure(Exception e) {
 		ToastUtil.show(
-			_activity, "Couldn't get microblogs: " + e.getMessage(), true);
+			_activity, "Couldn't fetch microblogs entries: " + e.getMessage(),
+			true);
 	}
 
 	public void onSuccess(List<MicroblogsEntry> entries) {
-		_activity.updateMicroblogs(entries);
+		_activity.updateEntries(entries);
 	}
 
 	public List<MicroblogsEntry> transform(Object obj) throws Exception {
