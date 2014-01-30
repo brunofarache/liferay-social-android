@@ -24,10 +24,10 @@ import android.view.ViewGroup;
 
 import com.liferay.mobile.android.service.ServiceFactory;
 import com.liferay.mobile.android.service.Session;
-import com.liferay.mobile.android.v62.microblogsentry.MicroblogsentryService;
-import com.liferay.social.adapter.MicroblogsAdapter;
-import com.liferay.social.callback.GetMicroblogsEntriesCallback;
-import com.liferay.social.model.MicroblogsEntry;
+import com.liferay.mobile.android.v62.entry.EntryService;
+import com.liferay.social.adapter.UsersAdapter;
+import com.liferay.social.callback.GetContactsCallback;
+import com.liferay.social.model.User;
 import com.liferay.social.util.PrefsUtil;
 import com.liferay.social.util.ToastUtil;
 
@@ -36,28 +36,27 @@ import java.util.ArrayList;
 /**
  * @author Bruno Farache
  */
-public class MicroblogsFragment extends ListFragment {
+public class UsersFragment extends ListFragment {
 
-	public static final String TAG = MicroblogsFragment.class.getSimpleName();
+	public static final String TAG = UsersFragment.class.getSimpleName();
 
 	public View onCreateView(
 		LayoutInflater inflater, ViewGroup viewGroup, Bundle state) {
 
-		ArrayList<MicroblogsEntry> entries = new ArrayList<MicroblogsEntry>();
+		ArrayList<User> users = new ArrayList<User>();
 
-		MicroblogsAdapter adapter = new MicroblogsAdapter(
-			getActivity(), entries);
+		UsersAdapter adapter = new UsersAdapter(getActivity(), users);
 
 		setListAdapter(adapter);
 
 		try {
 			Session session = PrefsUtil.getSession(
-				new GetMicroblogsEntriesCallback(this));
+				new GetContactsCallback(this));
 
-			MicroblogsentryService service = ServiceFactory.getService(
-				MicroblogsentryService.class, session);
+			EntryService service = ServiceFactory.getService(
+				EntryService.class, session);
 
-			service.getMicroblogsEntries(-1, -1);
+			service.searchUsersAndContacts(10157, "", -1, -1);
 		}
 		catch (Exception e) {
 			ToastUtil.show(getActivity(), e.getMessage());
@@ -66,8 +65,8 @@ public class MicroblogsFragment extends ListFragment {
 		return super.onCreateView(inflater, viewGroup, state);
 	}
 
-	public void setEntries(ArrayList<MicroblogsEntry> entries) {
-		((MicroblogsAdapter)getListAdapter()).setEntries(entries);
+	public void setUsers(ArrayList<User> users) {
+		((UsersAdapter)getListAdapter()).setEntries(users);
 	}
 
 }

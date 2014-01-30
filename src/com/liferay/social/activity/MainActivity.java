@@ -35,6 +35,7 @@ import android.widget.ListView;
 
 import com.liferay.social.R;
 import com.liferay.social.fragment.MicroblogsFragment;
+import com.liferay.social.fragment.UsersFragment;
 
 /**
  * @author Josiane Bezerra
@@ -61,16 +62,13 @@ public class MainActivity extends Activity
 		menu.setOnItemClickListener(this);
 
 		FragmentManager manager = getFragmentManager();
+		Fragment fragment = manager.findFragmentByTag(UsersFragment.TAG);
 
-		Fragment microblogsFragment = manager.findFragmentByTag(
-			MicroblogsFragment.TAG);
-
-		if (microblogsFragment == null) {
+		if (fragment == null) {
 			FragmentTransaction transaction = manager.beginTransaction();
 
 			transaction.add(
-				R.id.right_fragment, new MicroblogsFragment(),
-				MicroblogsFragment.TAG);
+				R.id.right_fragment, new UsersFragment(), UsersFragment.TAG);
 
 			transaction.commit();
 		}
@@ -87,23 +85,14 @@ public class MainActivity extends Activity
 
 		switch (position) {
 			case 0:
-				FragmentManager manager = getFragmentManager();
+				_replaceRightFragment(new UsersFragment(), UsersFragment.TAG);
 
-				Fragment microblogsFragment = manager.findFragmentByTag(
-					MicroblogsFragment.TAG);
+				break;
+			case 1:
+				_replaceRightFragment(
+						new MicroblogsFragment(), MicroblogsFragment.TAG);
 
-				FragmentTransaction transaction = manager.beginTransaction();
-
-				if (microblogsFragment == null) {
-					microblogsFragment = new MicroblogsFragment();
-				}
-
-				transaction.replace(
-					R.id.right_fragment, microblogsFragment,
-					MicroblogsFragment.TAG);
-
-				transaction.commit();
-				_drawer.closeDrawers();
+				break;
 		}
 	}
 
@@ -121,6 +110,21 @@ public class MainActivity extends Activity
 			default:
 				return false;
 		}
+	}
+
+	private void _replaceRightFragment(Fragment fragment, String tag) {
+		FragmentManager manager = getFragmentManager();
+		Fragment replacement = manager.findFragmentByTag(tag);
+
+		if (replacement == null) {
+			replacement = fragment;
+		}
+
+		FragmentTransaction transaction = manager.beginTransaction();
+		transaction.replace(R.id.right_fragment, replacement, tag);
+		transaction.commit();
+
+		_drawer.closeDrawers();
 	}
 
 	private DrawerLayout _drawer;
