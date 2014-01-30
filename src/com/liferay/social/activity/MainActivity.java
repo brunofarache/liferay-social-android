@@ -15,6 +15,9 @@
 package com.liferay.social.activity;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 
 import android.content.Intent;
 
@@ -22,46 +25,82 @@ import android.os.Bundle;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.liferay.mobile.android.service.Session;
-import com.liferay.mobile.android.v7.microblogsentry.MicroblogsentryService;
 import com.liferay.social.R;
-import com.liferay.social.adapter.MicroblogsEntryAdapter;
-import com.liferay.social.callback.GetMicroblogsEntriesCallback;
-import com.liferay.social.model.MicroblogsEntry;
-import com.liferay.social.service.ServiceFactory;
-import com.liferay.social.util.PrefsUtil;
-import com.liferay.social.util.ToastUtil;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.liferay.social.fragment.MicroblogsFragment;
 
 /**
  * @author Josiane Bezerra
  * @author Silvio Santos
  */
-public class MainActivity extends Activity {
+public class MainActivity extends Activity
+		implements AdapterView.OnItemClickListener {
 
 	public void onCreate(Bundle state) {
 		super.onCreate(state);
 
 		setContentView(R.layout.main);
 
-		List<MicroblogsEntry> entries = new ArrayList<MicroblogsEntry>();
+		ListView menu = (ListView)findViewById(R.id.menu);
+		String[] menuItems = getResources().getStringArray(R.array.menu_items);
 
-		_adapter = new MicroblogsEntryAdapter(
-			this, R.layout.list_item, entries);
+		menu.setAdapter(
+			new ArrayAdapter<String>(
+				this, android.R.layout.simple_list_item_1, menuItems));
 
-		ListView listView = (ListView)findViewById(R.id.list);
-		listView.setAdapter(_adapter);
+		menu.setOnItemClickListener(this);
+
+		FragmentManager manager = getFragmentManager();
+
+		View rightView = findViewById(R.id.right_fragment);
+
+		Fragment microblogsFragment = manager.findFragmentByTag(
+			MicroblogsFragment.TAG);
+
+		if (microblogsFragment == null) {
+			FragmentTransaction transaction = manager.beginTransaction();
+
+			transaction.add(
+				R.id.right_fragment, new MicroblogsFragment(),
+				MicroblogsFragment.TAG);
+
+			transaction.commit();
+		}
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.menu, menu);
 
 		return true;
+	}
+
+	public void onItemClick(
+		AdapterView adapterView, View view, int position, long id) {
+
+		switch (position) {
+			case 0:
+				FragmentManager manager = getFragmentManager();
+
+				Fragment microblogsFragment = manager.findFragmentByTag(
+					MicroblogsFragment.TAG);
+
+				FragmentTransaction transaction = manager.beginTransaction();
+
+				if (microblogsFragment == null) {
+					microblogsFragment = new MicroblogsFragment();
+				}
+
+				transaction.replace(
+					R.id.right_fragment, microblogsFragment,
+					MicroblogsFragment.TAG);
+
+				transaction.commit();
+		}
 	}
 
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -79,28 +118,5 @@ public class MainActivity extends Activity {
 				return false;
 		}
 	}
-
-	public void onResume() {
-		super.onResume();
-
-		try {
-			Session session = PrefsUtil.getSession(
-				new GetMicroblogsEntriesCallback(this));
-
-			MicroblogsentryService service = ServiceFactory.getService(
-				MicroblogsentryService.class, session);
-
-			service.getMicroblogsEntries(-1, -1);
-		}
-		catch (Exception e) {
-			ToastUtil.show(this, e.getMessage());
-		}
-	}
-
-	public void updateEntries(List<MicroblogsEntry> entries) {
-		_adapter.setEntries(entries);
-	}
-
-	private MicroblogsEntryAdapter _adapter;
 
 }

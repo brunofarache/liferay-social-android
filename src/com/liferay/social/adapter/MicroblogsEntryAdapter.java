@@ -52,7 +52,7 @@ public class MicroblogsEntryAdapter extends ArrayAdapter<MicroblogsEntry> {
 			LayoutInflater inflater = (LayoutInflater)_context.getSystemService(
 				Context.LAYOUT_INFLATER_SERVICE);
 
-			view = inflater.inflate(R.layout.list_item, null);
+			view = inflater.inflate(R.layout.microblogs_list_item, null);
 
 			holder = new ViewHolder();
 

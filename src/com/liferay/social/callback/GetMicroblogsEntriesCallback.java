@@ -15,7 +15,7 @@
 package com.liferay.social.callback;
 
 import com.liferay.mobile.android.task.callback.typed.GenericAsyncTaskCallback;
-import com.liferay.social.activity.MainActivity;
+import com.liferay.social.fragment.MicroblogsFragment;
 import com.liferay.social.model.MicroblogsEntry;
 import com.liferay.social.util.ToastUtil;
 
@@ -31,18 +31,19 @@ import org.json.JSONObject;
 public class GetMicroblogsEntriesCallback
 	extends GenericAsyncTaskCallback<List<MicroblogsEntry>> {
 
-	public GetMicroblogsEntriesCallback(MainActivity activity) {
-		_activity = activity;
+	public GetMicroblogsEntriesCallback(MicroblogsFragment fragment) {
+		_fragment = fragment;
 	}
 
 	public void onFailure(Exception e) {
 		ToastUtil.show(
-			_activity, "Couldn't fetch microblogs entries: " + e.getMessage(),
+			_fragment.getActivity(), "Couldn't fetch microblogs entries: " +
+				e.getMessage(),
 			true);
 	}
 
 	public void onSuccess(List<MicroblogsEntry> entries) {
-		_activity.updateEntries(entries);
+		_fragment.setEntries(entries);
 	}
 
 	public List<MicroblogsEntry> transform(Object obj) throws Exception {
@@ -59,6 +60,6 @@ public class GetMicroblogsEntriesCallback
 		return entries;
 	}
 
-	private MainActivity _activity;
+	private MicroblogsFragment _fragment;
 
 }
