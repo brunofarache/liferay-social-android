@@ -23,6 +23,8 @@ import android.content.Intent;
 
 import android.os.Bundle;
 
+import android.support.v4.widget.DrawerLayout;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,6 +39,7 @@ import com.liferay.social.fragment.MicroblogsFragment;
 /**
  * @author Josiane Bezerra
  * @author Silvio Santos
+ * @author Bruno Farache
  */
 public class MainActivity extends Activity
 		implements AdapterView.OnItemClickListener {
@@ -45,6 +48,8 @@ public class MainActivity extends Activity
 		super.onCreate(state);
 
 		setContentView(R.layout.main);
+
+		_drawer = (DrawerLayout)findViewById(R.id.drawer);
 
 		ListView menu = (ListView)findViewById(R.id.menu);
 		String[] menuItems = getResources().getStringArray(R.array.menu_items);
@@ -56,8 +61,6 @@ public class MainActivity extends Activity
 		menu.setOnItemClickListener(this);
 
 		FragmentManager manager = getFragmentManager();
-
-		View rightView = findViewById(R.id.right_fragment);
 
 		Fragment microblogsFragment = manager.findFragmentByTag(
 			MicroblogsFragment.TAG);
@@ -100,6 +103,7 @@ public class MainActivity extends Activity
 					MicroblogsFragment.TAG);
 
 				transaction.commit();
+				_drawer.closeDrawers();
 		}
 	}
 
@@ -118,5 +122,7 @@ public class MainActivity extends Activity
 				return false;
 		}
 	}
+
+	private DrawerLayout _drawer;
 
 }

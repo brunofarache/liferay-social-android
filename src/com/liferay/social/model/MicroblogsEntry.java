@@ -20,7 +20,7 @@ import org.json.JSONObject;
 /**
  * @author Josiane Bezerra
  */
-public class MicroblogsEntry {
+public class MicroblogsEntry implements Comparable<MicroblogsEntry> {
 
 	public static final String COMPANY_ID = "companyId";
 
@@ -60,6 +60,11 @@ public class MicroblogsEntry {
 		_type = jsonObj.getInt(TYPE);
 		_userId = jsonObj.getLong(USER_ID);
 		_userName = jsonObj.getString(USER_NAME);
+	}
+
+	public int compareTo(MicroblogsEntry entry) {
+		return Long.valueOf(_createDate).compareTo(
+			Long.valueOf(entry.getCreateDate()));
 	}
 
 	public long getCompanyId() {

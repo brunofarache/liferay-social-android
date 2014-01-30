@@ -24,8 +24,7 @@ import android.view.ViewGroup;
 
 import com.liferay.mobile.android.service.Session;
 import com.liferay.mobile.android.v7.microblogsentry.MicroblogsentryService;
-import com.liferay.social.R;
-import com.liferay.social.adapter.MicroblogsEntryAdapter;
+import com.liferay.social.adapter.MicroblogsAdapter;
 import com.liferay.social.callback.GetMicroblogsEntriesCallback;
 import com.liferay.social.model.MicroblogsEntry;
 import com.liferay.social.service.ServiceFactory;
@@ -33,7 +32,6 @@ import com.liferay.social.util.PrefsUtil;
 import com.liferay.social.util.ToastUtil;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Bruno Farache
@@ -45,10 +43,10 @@ public class MicroblogsFragment extends ListFragment {
 	public View onCreateView(
 		LayoutInflater inflater, ViewGroup viewGroup, Bundle state) {
 
-		List<MicroblogsEntry> entries = new ArrayList<MicroblogsEntry>();
+		ArrayList<MicroblogsEntry> entries = new ArrayList<MicroblogsEntry>();
 
-		MicroblogsEntryAdapter adapter = new MicroblogsEntryAdapter(
-			getActivity(), R.layout.microblogs_list_item, entries);
+		MicroblogsAdapter adapter = new MicroblogsAdapter(
+			getActivity(), entries);
 
 		setListAdapter(adapter);
 
@@ -68,8 +66,8 @@ public class MicroblogsFragment extends ListFragment {
 		return super.onCreateView(inflater, viewGroup, state);
 	}
 
-	public void setEntries(List<MicroblogsEntry> entries) {
-		((MicroblogsEntryAdapter)getListAdapter()).setEntries(entries);
+	public void setEntries(ArrayList<MicroblogsEntry> entries) {
+		((MicroblogsAdapter)getListAdapter()).setEntries(entries);
 	}
 
 }

@@ -20,7 +20,6 @@ import com.liferay.social.model.MicroblogsEntry;
 import com.liferay.social.util.ToastUtil;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -29,7 +28,7 @@ import org.json.JSONObject;
  * @author Silvio Santos
  */
 public class GetMicroblogsEntriesCallback
-	extends GenericAsyncTaskCallback<List<MicroblogsEntry>> {
+	extends GenericAsyncTaskCallback<ArrayList<MicroblogsEntry>> {
 
 	public GetMicroblogsEntriesCallback(MicroblogsFragment fragment) {
 		_fragment = fragment;
@@ -42,12 +41,12 @@ public class GetMicroblogsEntriesCallback
 			true);
 	}
 
-	public void onSuccess(List<MicroblogsEntry> entries) {
+	public void onSuccess(ArrayList<MicroblogsEntry> entries) {
 		_fragment.setEntries(entries);
 	}
 
-	public List<MicroblogsEntry> transform(Object obj) throws Exception {
-		List<MicroblogsEntry> entries = new ArrayList<MicroblogsEntry>();
+	public ArrayList<MicroblogsEntry> transform(Object obj) throws Exception {
+		ArrayList<MicroblogsEntry> entries = new ArrayList<MicroblogsEntry>();
 
 		JSONArray jsonArray = (JSONArray)obj;
 

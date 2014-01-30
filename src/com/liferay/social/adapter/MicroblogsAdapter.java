@@ -16,40 +16,36 @@ package com.liferay.social.adapter;
 
 import android.content.Context;
 
-import android.os.Build;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.liferay.social.R;
 import com.liferay.social.model.MicroblogsEntry;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * @author Josiane Bezerra
  * @author Silvio Santos
+ * @author Bruno Farache
  */
-public class MicroblogsEntryAdapter extends ArrayAdapter<MicroblogsEntry> {
+public class MicroblogsAdapter extends BaseListAdapter<MicroblogsEntry> {
 
-	public MicroblogsEntryAdapter(
-		Context context, int resource, List<MicroblogsEntry> entries) {
+	public MicroblogsAdapter(
+		Context context, ArrayList<MicroblogsEntry> entries) {
 
-		super(context, resource, entries);
-
-		_context = context;
+		super(context, entries);
 	}
 
 	public View getView(int position, View view, ViewGroup parent) {
 		ViewHolder holder;
 
 		if (view == null) {
-			LayoutInflater inflater = (LayoutInflater)_context.getSystemService(
+			LayoutInflater inflater = (LayoutInflater)context.getSystemService(
 				Context.LAYOUT_INFLATER_SERVICE);
 
 			view = inflater.inflate(R.layout.microblogs_list_item, null);
@@ -74,25 +70,6 @@ public class MicroblogsEntryAdapter extends ArrayAdapter<MicroblogsEntry> {
 
 		return view;
 	}
-
-	public void setEntries(List<MicroblogsEntry> entries) {
-		setNotifyOnChange(false);
-
-		clear();
-
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			addAll(entries);
-		}
-		else {
-			for (MicroblogsEntry entry : entries) {
-				add(entry);
-			}
-		}
-
-		notifyDataSetChanged();
-	}
-
-	private Context _context;
 
 	private class ViewHolder {
 
