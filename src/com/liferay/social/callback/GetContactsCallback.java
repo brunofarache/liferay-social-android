@@ -15,7 +15,7 @@
 package com.liferay.social.callback;
 
 import com.liferay.mobile.android.task.callback.typed.GenericAsyncTaskCallback;
-import com.liferay.social.fragment.UsersFragment;
+import com.liferay.social.fragment.ContactsFragment;
 import com.liferay.social.model.User;
 import com.liferay.social.util.ToastUtil;
 
@@ -30,7 +30,7 @@ import org.json.JSONObject;
 public class GetContactsCallback
 	extends GenericAsyncTaskCallback<ArrayList<User>> {
 
-	public GetContactsCallback(UsersFragment fragment) {
+	public GetContactsCallback(ContactsFragment fragment) {
 		_fragment = fragment;
 	}
 
@@ -58,6 +58,6 @@ public class GetContactsCallback
 		return users;
 	}
 
-	private UsersFragment _fragment;
+	private ContactsFragment _fragment;
 
 }

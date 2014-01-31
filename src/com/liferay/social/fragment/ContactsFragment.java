@@ -22,11 +22,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ListView;
+
+import com.liferay.mobile.android.service.BatchSessionImpl;
 import com.liferay.mobile.android.service.ServiceFactory;
 import com.liferay.mobile.android.service.Session;
+import com.liferay.mobile.android.v62.contact.ContactService;
 import com.liferay.mobile.android.v62.entry.EntryService;
+import com.liferay.mobile.android.v62.phone.PhoneService;
+import com.liferay.social.activity.MainActivity;
 import com.liferay.social.adapter.UsersAdapter;
 import com.liferay.social.callback.GetContactsCallback;
+import com.liferay.social.callback.GetDetailsCallback;
 import com.liferay.social.model.User;
 import com.liferay.social.util.PrefsUtil;
 import com.liferay.social.util.ToastUtil;
@@ -36,17 +43,15 @@ import java.util.ArrayList;
 /**
  * @author Bruno Farache
  */
-public class UsersFragment extends ListFragment {
+public class ContactsFragment extends ListFragment {
 
-	public static final String TAG = UsersFragment.class.getSimpleName();
+	public static final String TAG = ContactsFragment.class.getSimpleName();
 
 	public View onCreateView(
 		LayoutInflater inflater, ViewGroup viewGroup, Bundle state) {
 
 		ArrayList<User> users = new ArrayList<User>();
-
 		UsersAdapter adapter = new UsersAdapter(getActivity(), users);
-
 		setListAdapter(adapter);
 
 		try {
@@ -63,6 +68,38 @@ public class UsersFragment extends ListFragment {
 		}
 
 		return super.onCreateView(inflater, viewGroup, state);
+	}
+
+	public void onListItemClick(
+		ListView listView, View view, int position, long id) {
+
+		User user = ((UsersAdapter)getListAdapter()).getItem(position);
+
+		if (!user.isPortalUser()) {
+			return;
+		}
+
+		GetDetailsCallback callback = new GetDetailsCallback(
+			(MainActivity)getActivity(), user);
+
+		BatchSessionImpl batch = PrefsUtil.getBatchSession(callback);
+
+		try {
+			ContactService contactService = ServiceFactory.getService(
+				ContactService.class, batch);
+
+			PhoneService phoneService = ServiceFactory.getService(
+				PhoneService.class, batch);
+
+			contactService.getContact(user.getContactId());
+			phoneService.getPhones(
+				"com.liferay.portal.model.Contact", user.getContactId());
+
+			batch.invoke();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void setUsers(ArrayList<User> users) {

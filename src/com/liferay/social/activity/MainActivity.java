@@ -34,8 +34,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.liferay.social.R;
+import com.liferay.social.fragment.ContactsFragment;
+import com.liferay.social.fragment.DetailsFragment;
 import com.liferay.social.fragment.MicroblogsFragment;
-import com.liferay.social.fragment.UsersFragment;
+import com.liferay.social.model.User;
 
 /**
  * @author Josiane Bezerra
@@ -62,13 +64,14 @@ public class MainActivity extends Activity
 		menu.setOnItemClickListener(this);
 
 		FragmentManager manager = getFragmentManager();
-		Fragment fragment = manager.findFragmentByTag(UsersFragment.TAG);
+		Fragment fragment = manager.findFragmentByTag(ContactsFragment.TAG);
 
 		if (fragment == null) {
 			FragmentTransaction transaction = manager.beginTransaction();
 
 			transaction.add(
-				R.id.right_fragment, new UsersFragment(), UsersFragment.TAG);
+				R.id.right_fragment, new ContactsFragment(),
+				ContactsFragment.TAG);
 
 			transaction.commit();
 		}
@@ -85,12 +88,13 @@ public class MainActivity extends Activity
 
 		switch (position) {
 			case 0:
-				_replaceRightFragment(new UsersFragment(), UsersFragment.TAG);
+				_replaceRightFragment(
+					new ContactsFragment(), ContactsFragment.TAG);
 
 				break;
 			case 1:
 				_replaceRightFragment(
-						new MicroblogsFragment(), MicroblogsFragment.TAG);
+					new MicroblogsFragment(), MicroblogsFragment.TAG);
 
 				break;
 		}
@@ -110,6 +114,16 @@ public class MainActivity extends Activity
 			default:
 				return false;
 		}
+	}
+
+	public void showDetails(User user) {
+		Fragment fragment = new DetailsFragment();
+
+		Bundle arguments = new Bundle();
+		arguments.putSerializable("user", user);
+		fragment.setArguments(arguments);
+
+		_replaceRightFragment(fragment, DetailsFragment.TAG);
 	}
 
 	private void _replaceRightFragment(Fragment fragment, String tag) {

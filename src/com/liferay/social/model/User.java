@@ -14,13 +14,15 @@
 
 package com.liferay.social.model;
 
+import java.io.Serializable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
  * @author Bruno Farache
  */
-public class User implements Comparable<User> {
+public class User implements Comparable<User>, Serializable {
 
 	public User(JSONObject jsonObj) throws JSONException {
 		_emailAddress = jsonObj.getString("emailAddress");
@@ -53,6 +55,10 @@ public class User implements Comparable<User> {
 
 	public String getComments() {
 		return _comments;
+	}
+
+	public Contact getContact() {
+		return _contact;
 	}
 
 	public long getContactId() {
@@ -131,6 +137,10 @@ public class User implements Comparable<User> {
 		_connectionRequested = connectionRequested;
 	}
 
+	public void setContact(Contact contact) {
+		_contact = contact;
+	}
+
 	public void setContactId(long contactId) {
 		_contactId = contactId;
 	}
@@ -183,6 +193,7 @@ public class User implements Comparable<User> {
 	private String _comments;
 	private boolean _connected;
 	private boolean _connectionRequested;
+	private Contact _contact;
 	private long _contactId;
 	private String _emailAddress;
 	private long _entryId;

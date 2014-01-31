@@ -19,6 +19,7 @@ import android.content.SharedPreferences;
 
 import android.preference.PreferenceManager;
 
+import com.liferay.mobile.android.service.BatchSessionImpl;
 import com.liferay.mobile.android.service.Session;
 import com.liferay.mobile.android.service.SessionImpl;
 import com.liferay.mobile.android.task.callback.AsyncTaskCallback;
@@ -33,6 +34,10 @@ public class PrefsUtil {
 	public static final String PASSWORD = "password";
 
 	public static final String SERVER = "server";
+
+	public static BatchSessionImpl getBatchSession(AsyncTaskCallback callback) {
+		return new BatchSessionImpl(getSession(callback));
+	}
 
 	public static String getLogin() {
 		return _preferences.getString(LOGIN, StringPool.BLANK);
