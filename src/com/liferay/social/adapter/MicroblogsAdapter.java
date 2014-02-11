@@ -20,7 +20,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.liferay.social.R;
@@ -52,7 +51,6 @@ public class MicroblogsAdapter extends BaseListAdapter<MicroblogsEntry> {
 
 			holder = new ViewHolder();
 
-			holder.portrait = (ImageView)view.findViewById(R.id.portrait);
 			holder.username = (TextView)view.findViewById(R.id.username);
 			holder.content = (TextView)view.findViewById(R.id.content);
 
@@ -64,7 +62,6 @@ public class MicroblogsAdapter extends BaseListAdapter<MicroblogsEntry> {
 
 		MicroblogsEntry entry = getItem(position);
 
-		holder.portrait.setImageResource(R.drawable.ic_contact_picture);
 		holder.content.setText(entry.getContent());
 		holder.username.setText(entry.getUserName());
 
@@ -73,7 +70,6 @@ public class MicroblogsAdapter extends BaseListAdapter<MicroblogsEntry> {
 
 	private class ViewHolder {
 
-		ImageView portrait;
 		TextView username;
 		TextView content;
 

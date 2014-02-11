@@ -32,8 +32,8 @@ import com.liferay.mobile.android.v62.entry.EntryService;
 import com.liferay.mobile.android.v62.phone.PhoneService;
 import com.liferay.social.activity.MainActivity;
 import com.liferay.social.adapter.UsersAdapter;
-import com.liferay.social.callback.GetContactsCallback;
 import com.liferay.social.callback.GetDetailsCallback;
+import com.liferay.social.callback.GetUsersCallback;
 import com.liferay.social.model.User;
 import com.liferay.social.util.PrefsUtil;
 import com.liferay.social.util.ToastUtil;
@@ -43,9 +43,9 @@ import java.util.ArrayList;
 /**
  * @author Bruno Farache
  */
-public class ContactsFragment extends ListFragment {
+public class UsersFragment extends ListFragment {
 
-	public static final String TAG = ContactsFragment.class.getSimpleName();
+	public static final String TAG = UsersFragment.class.getSimpleName();
 
 	public View onCreateView(
 		LayoutInflater inflater, ViewGroup viewGroup, Bundle state) {
@@ -55,8 +55,7 @@ public class ContactsFragment extends ListFragment {
 		setListAdapter(adapter);
 
 		try {
-			Session session = PrefsUtil.getSession(
-				new GetContactsCallback(this));
+			Session session = PrefsUtil.getSession(new GetUsersCallback(this));
 
 			EntryService service = ServiceFactory.getService(
 				EntryService.class, session);

@@ -34,9 +34,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.liferay.social.R;
-import com.liferay.social.fragment.ContactsFragment;
 import com.liferay.social.fragment.DetailsFragment;
 import com.liferay.social.fragment.MicroblogsFragment;
+import com.liferay.social.fragment.UsersFragment;
 import com.liferay.social.model.User;
 
 /**
@@ -50,7 +50,7 @@ public class MainActivity extends Activity
 	public void onCreate(Bundle state) {
 		super.onCreate(state);
 
-		setContentView(R.layout.main);
+		setContentView(R.layout.users);
 
 		_drawer = (DrawerLayout)findViewById(R.id.drawer);
 
@@ -64,14 +64,13 @@ public class MainActivity extends Activity
 		menu.setOnItemClickListener(this);
 
 		FragmentManager manager = getFragmentManager();
-		Fragment fragment = manager.findFragmentByTag(ContactsFragment.TAG);
+		Fragment fragment = manager.findFragmentByTag(UsersFragment.TAG);
 
 		if (fragment == null) {
 			FragmentTransaction transaction = manager.beginTransaction();
 
 			transaction.add(
-				R.id.right_fragment, new ContactsFragment(),
-				ContactsFragment.TAG);
+				R.id.right_fragment, new UsersFragment(), UsersFragment.TAG);
 
 			transaction.commit();
 		}
@@ -88,8 +87,7 @@ public class MainActivity extends Activity
 
 		switch (position) {
 			case 0:
-				_replaceRightFragment(
-					new ContactsFragment(), ContactsFragment.TAG);
+				_replaceRightFragment(new UsersFragment(), UsersFragment.TAG);
 
 				break;
 			case 1:
