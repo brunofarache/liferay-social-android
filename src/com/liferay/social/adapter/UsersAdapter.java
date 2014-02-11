@@ -14,17 +14,19 @@
 
 package com.liferay.social.adapter;
 
-import android.R;
-
 import android.content.Context;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.liferay.social.R;
 import com.liferay.social.model.User;
+import com.liferay.social.task.PortraitAsyncTask;
+import com.liferay.social.util.PrefsUtil;
 
 import java.util.ArrayList;
 
@@ -38,33 +40,25 @@ public class UsersAdapter extends BaseListAdapter<User> {
 	}
 
 	public View getView(int position, View view, ViewGroup parent) {
-		ViewHolder holder;
+		LayoutInflater inflater = (LayoutInflater)context.getSystemService(
+			Context.LAYOUT_INFLATER_SERVICE);
 
-		if (view == null) {
-			LayoutInflater inflater = (LayoutInflater)context.getSystemService(
-				Context.LAYOUT_INFLATER_SERVICE);
+		view = inflater.inflate(R.layout.user_list_item, null);
 
-			view = inflater.inflate(R.layout.simple_list_item_1, null);
-
-			holder = new ViewHolder();
-			holder.name = (TextView)view.findViewById(R.id.text1);
-			view.setTag(holder);
-		}
-		else {
-			holder = (ViewHolder)view.getTag();
-		}
+		ImageView portrait = (ImageView)view.findViewById(R.id.portrait);
+		TextView name = (TextView)view.findViewById(R.id.name);
 
 		User user = getItem(position);
 
-		holder.name.setText(user.getFullName());
+		portrait.setImageResource(R.drawable.ic_contact_picture);
+		name.setText(user.getFullName());
+
+		PortraitAsyncTask task = new PortraitAsyncTask(
+			PrefsUtil.getSession(), user, portrait);
+
+		task.execute();
 
 		return view;
-	}
-
-	private class ViewHolder {
-
-		TextView name;
-
 	}
 
 }

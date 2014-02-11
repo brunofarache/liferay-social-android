@@ -50,7 +50,7 @@ public class MainActivity extends Activity
 	public void onCreate(Bundle state) {
 		super.onCreate(state);
 
-		setContentView(R.layout.users);
+		setContentView(R.layout.main);
 
 		_drawer = (DrawerLayout)findViewById(R.id.drawer);
 
