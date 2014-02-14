@@ -1,0 +1,25 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.8.+'
+    }
+}
+
+apply plugin: 'android'
+
+dependencies {
+    compile files('libs/liferay-android-sdk.jar')
+    compile 'com.android.support:support-v4:19.0.+'
+}
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion '19.0.0'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.10'
+}
