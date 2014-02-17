@@ -1,3 +1,10 @@
+apply plugin: 'android'
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion '19.0.0'
+}
+
 buildscript {
     repositories {
         mavenCentral()
@@ -8,16 +15,9 @@ buildscript {
     }
 }
 
-apply plugin: 'android'
-
 dependencies {
     compile files('libs/liferay-android-sdk.jar')
     compile 'com.android.support:support-v4:19.0.+'
-}
-
-android {
-    compileSdkVersion 19
-    buildToolsVersion '19.0.0'
 }
 
 FileCollection portalClasspath = files(
