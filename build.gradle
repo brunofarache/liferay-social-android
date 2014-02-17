@@ -20,6 +20,22 @@ android {
     buildToolsVersion '19.0.0'
 }
 
+FileCollection portalClasspath = files(
+    new File(portalDir + '/lib/development').listFiles(),
+    new File(portalDir + '/lib/global').listFiles(),
+    new File(portalDir + '/lib/portal').listFiles(),
+    new File(portalDir + '/portal-impl/portal-impl.jar'),
+    new File(portalDir + '/portal-service/portal-service.jar'),
+    new File(portalDir + '/portal-web/portal-web.jar'),
+    new File(portalDir + '/util-java/util-java.jar')
+)
+
+task format(type: JavaExec) {
+    main = 'com.liferay.portal.tools.sourceformatter.SourceFormatter'
+    classpath = portalClasspath
+    workingDir = new File('src/main')
+}
+
 task wrapper(type: Wrapper) {
     gradleVersion = '1.10'
 }
